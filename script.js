@@ -56,6 +56,25 @@ function keyUpHandler(e) {
     }
 }
 
+function collisionDetection(){
+    for (let c=0; c<brickColumnCount; c++){
+        for (let r=0; r < brickRowCount ; r++) {
+            const brick = bricks[c][r];
+            if (brick.status === 1){
+                if(
+                    ballX > brick.x &&
+                    ballX < brick.x + brickWidth && 
+                    ballY > brick.y &&
+                    ballY < brick.y+brickHeight
+                ){
+                    ballSpeedY = -ballSpeedY;
+                    brick.status = 0;
+                }
+            }
+        }
+    }
+}
+
 //game loop
 function draw() {
     ctx.clearRect(0 , 0, canvas.width, canvas.height);//clears everything on the canvas before drawing new things
@@ -121,6 +140,7 @@ function draw() {
         document.location.reload();
     }
 }
+collisionDetection();
 requestAnimationFrame(draw);
 }
 
